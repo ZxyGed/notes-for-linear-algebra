@@ -99,3 +99,17 @@ $E\cdot \begin{bmatrix} A& I\end{bmatrix}=\begin{bmatrix} I&?\end{bmatrix}\qquad
 
 $E\cdot \begin{bmatrix} A& I\end{bmatrix}=\begin{bmatrix} I&A^{-1}\end{bmatrix}$ 即将增广矩阵添加到右侧将系数矩阵转换为单位矩阵即得逆矩阵
 
+
+
+## A的LU分解
+
+即 $A=LU\rightarrow L=E^{-1}$ ,L代表lower，下三角矩阵，可以这样理解，在将A化成U的过程中，第n行减去第n-1行，也就是最开始的操作是不会涉及n+1之后的行的，因此E本身就是下三角矩阵，其逆同样也是下三角矩阵。
+
+$AA^{-1}=I$ 将两边同时转置（左边顺序会发生颠倒），得到$(A^{-1})^TA^T=I\rightarrow (A^{-1})^T=(A^T)^{-1}$ 即对于单个矩阵而言，其转置和逆运算可以颠倒
+
+LU分解相对于高斯消元的优势在于对于大矩阵，在b变化的时候也无需全部重新计算，因为计算过程分为求逆以及回代，复杂度分别为 $n^3$ 以及 $n^2$ ，高斯方法在b改变情况下都需要重算，LU方法仅需要重新回代，具体意义参考 [线性代数笔记10——矩阵的LU分解](https://blog.csdn.net/sunbobosun56801/article/details/82190610)
+
+## 转置-置换-向量空间
+
+对于n维矩阵，共有 n! 个置换矩阵P，其中 $P^{-1}=P$，即其逆，以及一些列重复的置换运算都在置换矩阵群中
+
