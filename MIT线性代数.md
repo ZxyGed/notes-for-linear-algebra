@@ -178,3 +178,68 @@ $$
 
 $x$ 的列空间（零向量空间），为特解组成的矩阵，对比原答案，发现满足，事实上，为了求解方便，无需将R进行列重排，在原基础上$\begin{bmatrix}?&?\\0&1\\?&?\\1&0 \end{bmatrix}$ 将 -F 依次填入即可
 
+## 求解Ax=b可解性以及解的结构
+
+$Ax=b\Rightarrow Ax=b+0$ 即其解为一个自由变量都为0的特解以及零向量空间组成，从空间上看，是将0向量空间平移到正好穿过特解，特解为particular（前提是特解存在）
+
+:star2:：以下讨论秩r与解的情况
+
+首先需要明白对于 $A_{m\times n}$，m为方程式个数，n为变量个数，$r\leq min(m,n)$
+
+当 $r<n$，存在自由变量，零向量空间包含无穷多向量，否则仅包含全为0的向量
+
+当 $r<m$，存在全为0的行，这意味着存在无特殊解的情况
+
+| 条件      | 最简阶梯矩阵                             | 解的情况         |
+| --------- | ---------------------------------------- | ---------------- |
+| $r=m=n$   | $R=I$                                    | 有且仅有一解     |
+| $r=n<m$   | $R=\begin{bmatrix}I\\0 \end{bmatrix}$    | 无解或者仅有一解 |
+| $r=m<n$   | $R=\begin{bmatrix} I&F\end{bmatrix}$     | 有无穷解         |
+| $r<m,r<n$ | $R=\begin{bmatrix}I&F\\0&0\end{bmatrix}$ | 无解或无穷解     |
+
+
+
+1. $r=m=n$，此时矩阵满秩，$r=n$ 推出该矩阵覆盖n维空间同时其不存在自由变量，零向量空间仅包含全为零的向量，又由于 $m=n$，则 $R=I$ ，不存在全为0的行，即一定有1解，综合来看，在该情况下有且仅有一解
+2. $r=n<m$，此时无自由变量，零向量空间仅包含全为零的向量，又$R=\begin{bmatrix}I\\0 \end{bmatrix}$，因此取决于特殊解是否存在，综上无解或者仅有一解。
+3. $r=m<n$，此时存在自由变量，即一定有无穷解（零向量空间），$R=\begin{bmatrix} I&F\end{bmatrix}$，一定存在特殊解，综上有无穷解
+4. $r<m,r<n$，此时存在自由变量，同时存在全为0的行，$R=\begin{bmatrix}I&F\\0&0\end{bmatrix}$ ，无解解或无穷解
+
+##  线性相关性、基、维数
+
+**线性无关**：如果找不到一个线性组合，使其对向量 $x_1,x_2,\dots,x_n$ 而言，使得 $c_1x_1+c_2x_2+\dots+c_nx_n=0$，则这些向量线性无关的（除去所有系数为0的情况）。
+
+:star:换句话说，求解 $Ax=0,A=[x_1,x_2,\dots,x_n]$ ，如果其零向量空间中包含非零向量，则其线性相关 $\Longleftrightarrow$ **如果 $r<n$ ，其必定线性相关**
+
+重述：when $v_1,v_2,\dots,v_n$ are columns of A, They are independent if null space of A is {zero vector} They are dependent if $Ac=0$ for some none-zero vector c in the null space.
+
+:star:由定义可知，只要包含零向量，则其必定线性相关，因为零向量与任意向量线性相关，即取0向量的系数非零，其他向量系数为0
+
+**生成空间定义**：Vectors $v_1,v_2,\dots ,v_l$ span a space means the space consists of all combinations of those vectors.
+
+**基(basis)定义**：Basis for a space is a sequence of vectors $v_1,v_2,\dots,v_n$ with 2 properties:
+
+1.  they are independent
+2. they span the space
+
+考虑 $\begin{bmatrix}1\\1\\2 \end{bmatrix}$ 以及 $\begin{bmatrix}2\\3\\4 \end{bmatrix}$ 也能成为一组基，其为过这两个向量的平面的基
+
+:star:对于 $R^n$ 中的n个向量，想要组成一组基，由这n个向量为列向量组成的矩阵必须可逆（因为可逆的判断条件同线性无关的判断条件相同，参见乘法和逆矩阵那一节）
+
+**维度的定义**：Given a space,every basis for the space has the number of vectors, the number is dimension of the space.
+
+:star:rank(A) = the number of pivot columns = dimension of C(A) [列空间]
+
+对应的，N(A)[零向量空间]的维度为自由变量的个数
+
+## 四个基本子空间
+
+对于矩阵 $A_{m\times n}$
+
+column space：$C(A)$ in $R^m$ 
+
+null space：$N(A)$ in $R^n$ 
+
+row space：$C(A^T)$ in $R^n$
+
+null space of A transpose：$N(A^T)$ in $R^m$ 
+
