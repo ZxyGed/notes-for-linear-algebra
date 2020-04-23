@@ -8,7 +8,9 @@
 
 从列的角度，每一列可以看作一个三维向量，化为三个向量的线性和，于是对于如下问题
 
-:star: `Can I solve Ax = b for every b ?` $\Longleftrightarrow$ `Do the linear combinations of the columns fill the 3-D space?`
+:star: `Can I solve Ax = b for every b ? ` $（A_{m\times n}）$ $\Longleftrightarrow$ `Do the linear combinations of the columns fill the M-D space?` 这需要从列空间理解。
+
+换句话说，想要 `Ax = b` 有解，b需要属于A的列空间，即 $b \in C(A)$
 
 当三个向量共面时，便无法充满三维空间，这种情况成为奇异（singular case），此时矩阵不可逆
 
@@ -111,5 +113,68 @@ LU分解相对于高斯消元的优势在于对于大矩阵，在b变化的时�
 
 ## 转置-置换-向量空间
 
-对于n维矩阵，共有 n! 个置换矩阵P，其中 $P^{-1}=P$，即其逆，以及一些列重复的置换运算都在置换矩阵群中
+公式：$(AB)^T=B^TA^T$
+
+对于n维矩阵，共有 n! 个置换矩阵P，其中 $P^{-1}=P$，同时由于$P^T P=I\rightarrow P^T=P^{-1}$
+
+对称矩阵：$P=P^T$ 事实上对于矩阵R，$RR^T$ 结果永远都是对称矩阵（可以通过计算过程理解），可以将其表示为 $RR^T=(RR^T)^T=(R^T)^TR^T=RR^T$
+
+向量空间：满足其中的向量相乘相加后仍旧处于其中（对加法和乘法是封闭的，即线性组合封闭），这也就意味着所有向量空间毕竟包含零向量，如$R^n$ 表示由n维向量构成的向量空间 
+
+向量子空间（列空间C(A),C 代表column）：也就是向量空间的一部分，但其满足线性组合封闭的性质，例如对于一位的向量空间而言，其向量子空间有零向量空间，本身（过原点 的直线）；对于二位向量空间，其子空间包括零向量空间，过原点的直线以及本身；对于三维向量空间，其子空间包括零向量空间，过原点的直线，过原点的平面以及自身。。。以此类推
+
+:star:零向量空间指的是 $\{x|Ax=0 \}$，其必定是向量空间，首先其包含零向量，其次，对于 $w,v \in x$，其满足线性组合封闭性，而对于 $\{x|Ax=b,b\neq0\}$ 必定不是向量空间，因为其不包含零向量，对于零向量空间的表示，通过取特殊解可以理解（可能为过原点的平面或过原点的直线）
+
+考虑矩阵 $A=\begin{bmatrix}1&3\\2&3\\4&1\end{bmatrix}$ ，其列（两个三维向量）构成列空间（三维向量空间中过原点的平面），同理对于 $A_{10\times 5}$ 其构成的是十维向量空间中，过原点的五维列空间（需要确保每列线性无关）
+
+## 列空间和零向量
+
+以 $R^3$ 为例，考虑其中的子空间P(plane)以及L(line)，$P\cup L$ 并不构成向量子空间，因为他们不满足加法封闭，而$P\cap L$ 是满足的，考虑 $w,v \in P\cap L$，则 $w+v\in\ P且\ w+v\in\ L$  因为他们同时属于子空间P与L中，乘法同理，因此其交集属于向量子空间
+
+其余内容结合上一节理解
+
+## 求解 $Ax=0$ 主变量、特解
+
+rref(reduce row echelon form，即简化行阶梯矩阵形式)：[Python3 矩阵求最简行阶梯矩阵](https://blog.csdn.net/ikoiiii/article/details/92075982?depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3&utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3)
+
+其中U为行阶梯矩阵，R为最简行阶梯矩阵
+$$
+A=\begin{bmatrix}
+1&2&2&2\\
+2&4&6&8\\
+3&6&8&10
+\end{bmatrix}
+\rightarrow U=\begin{bmatrix}
+1&2&2&2\\
+0&0&2&4\\
+0&0&0&0
+\end{bmatrix}
+\rightarrow R=\begin{bmatrix}
+1&2&0&-2\\
+0&0&1&2\\
+0&0&0&0
+\end{bmatrix}
+$$
+矩阵的**秩**为每个矩阵的非零行数目，其中非零行的首个非零元素对应的变量称为**主元**，其余变量成为**自由变量**，在上式中$x_1$和$x_3$是主元，$x_2$和$x_4$是自由变量
+
+可以依次取自由变量中单独一个量为1，其余为0来计算特解，而最终的零向量空间为其所有特解的线性组合，如上式中$x_2$和$x_4$是自由变量，则令解分别为$\begin{bmatrix}?\\0\\?\\1 \end{bmatrix}$ 以及 $\begin{bmatrix}?\\1\\?\\0 \end{bmatrix}$，求出特解，最终解为$x=c\begin{bmatrix}-2\\1\\0\\0 \end{bmatrix}+d\begin{bmatrix}2\\0\\-2\\1 \end{bmatrix}$ 
+
+:star2: insight：将R中主列以及自由列重新排列，可以得到如下形式
+$$
+R=\begin{bmatrix}
+1&0&2&-2\\
+0&1&0&2\\
+0&0&0&0
+\end{bmatrix}
+=\begin{bmatrix}
+I&F\\
+0&0
+\end{bmatrix}（F\ means\ free\ column）
+$$
+
+$$
+Rx=0\rightarrow\begin{bmatrix}I&F\\0&0 \end{bmatrix}x=0\quad \Rightarrow \quad x=\begin{bmatrix}-F\\ I \end{bmatrix}=\begin{bmatrix}-2&2\\0&-2\\1&0\\0&1\end{bmatrix}
+$$
+
+$x$ 的列空间（零向量空间），为特解组成的矩阵，对比原答案，发现满足，事实上，为了求解方便，无需将R进行列重排，在原基础上$\begin{bmatrix}?&?\\0&1\\?&?\\1&0 \end{bmatrix}$ 将 -F 依次填入即可
 
