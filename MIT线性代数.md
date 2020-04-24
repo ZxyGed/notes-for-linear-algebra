@@ -107,6 +107,8 @@ $E\cdot \begin{bmatrix} A& I\end{bmatrix}=\begin{bmatrix} I&A^{-1}\end{bmatrix}$
 
 即 $A=LU\rightarrow L=E^{-1}$ ,L代表lower，下三角矩阵，可以这样理解，在将A化成U的过程中，第n行减去第n-1行，也就是最开始的操作是不会涉及n+1之后的行的，因此E本身就是下三角矩阵，其逆同样也是下三角矩阵。
 
+$(AB)^T=B^TA^T$ 可以从行列变换角度理解，即矩阵在左进行的是行变换，当进行转置，行变为列，于是需要位置互换，即行变换转变为列变换。
+
 $AA^{-1}=I$ 将两边同时转置（左边顺序会发生颠倒），得到$(A^{-1})^TA^T=I\rightarrow (A^{-1})^T=(A^T)^{-1}$ 即对于单个矩阵而言，其转置和逆运算可以颠倒
 
 LU分解相对于高斯消元的优势在于对于大矩阵，在b变化的时候也无需全部重新计算，因为计算过程分为求逆以及回代，复杂度分别为 $n^3$ 以及 $n^2$ ，高斯方法在b改变情况下都需要重算，LU方法仅需要重新回代，具体意义参考 [线性代数笔记10——矩阵的LU分解](https://blog.csdn.net/sunbobosun56801/article/details/82190610)
@@ -233,13 +235,35 @@ $Ax=b\Rightarrow Ax=b+0$ 即其解为一个自由变量都为0的特解以及零
 
 ## 四个基本子空间
 
+[10. MIT线性代数---四个基本子空间](https://zhuanlan.zhihu.com/p/44313005)
+
+:star:行变换的过程不影响方程的解，行空间不变（因为做的是线性变换），但是列空间会变。
+
 对于矩阵 $A_{m\times n}$
 
-column space：$C(A)$ in $R^m$ 
+| 所处向量空间 | 列空间                              | 维度  |
+| :----------: | :---------------------------------- | :---: |
+|    $R^m$     | column space：$C(A)$                |  $r$  |
+|    $R^m$     | null space of A transpose：$N(A^T)$ | $m-r$ |
+|    $R^n$     | row space：$C(A^T)$                 |  $r$  |
+|    $R^n$     | null space：$N(A)$                  | $n-r$ |
 
-null space：$N(A)$ in $R^n$ 
+注意左零空间（$N(A^T)$）的基的求解方法：为了方便求解（而不是转置重新计算），根据零空间的定义如下转换，$A^Ty=0\rightarrow y^TA=0$，此时y由行向量变为列向量。
 
-row space：$C(A^T)$ in $R^n$
+此时使用Gauss-Jordan消元法，复刻出 $A\rightarrow R$ 的变化矩阵
+$$
+\big[A_{m\times n}\ |\ I_{m\times n}\big]\Longrightarrow \big[R_{m\times n}\ |\ E_{m\times n}\big]
+$$
+$E_{m\times n}$ 即为所求，满足 $EA=R$，以如下具体例子为例
+$$
+EA=\begin{bmatrix}-1&2&0\\1&-1&0\\-1&0&1\end{bmatrix}\cdot 
+\begin{bmatrix}1&2&3&1\\1&1&2&1\\1&2&3&1\end{bmatrix}
+=\begin{bmatrix}1&0&1&1\\0&1&1&0\\0&0&0&0\end{bmatrix}
+=R
+$$
+首先可以知道 $r=2$，$N(A^T)$ 的维度为 $m-r=1$， 观察最后一行 $[-1\quad0\quad 1]$ ，其满足 $y^TA=0$，其即为左零空间的基
 
-null space of A transpose：$N(A^T)$ in $R^m$ 
+**矩阵空间**：将 $R^n$ 扩展为 $R^{n\times n}$ ，因为矩阵同时也满足向量空间的运算规则，所以可以把矩阵也看做空间，其中包括上三角矩阵、对称矩阵、对角矩阵等（大小一次减小）
+
+## 矩阵空间、秩1矩阵和小世界图
 
