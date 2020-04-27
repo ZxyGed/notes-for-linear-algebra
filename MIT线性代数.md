@@ -91,7 +91,7 @@ $$
 
 
 
-**奇异不可逆的矩阵（singular case, no inverse）**：`you can find a vector with Ax=0` 即$Ax=0\Leftrightarrow A^{-1}Ax=0\rightarrow x=0$ 矛盾，因此对于该类型的矩阵不可逆
+**奇异不可逆的矩阵（singular case, no inverse）**：`you can find a vector with Ax=0` 即$Ax=0\Leftrightarrow A^{-1}Ax=0\rightarrow x=0$ 矛盾，因此对于该类型的矩阵不可逆，即 $A$ 零空间只有零向量，即 $A$ 各列线性无关
 
 
 
@@ -311,3 +311,28 @@ $Ax$ 表示每条边的电势差，而 $A^T$ 表示每个节点的流入流出�
 
 交换矩阵的某两行，零空间不变是因为，零空间是解空间，交换某两行，对解空间没有影响。
 
+## 正交向量与子空间
+
+[14. MIT线性代数---正交向量与向量子空间](https://zhuanlan.zhihu.com/p/45193986)
+
+正交：$x^Ty=0$ 
+
+勾股定理：$\parallel \vec x\parallel^2+\parallel \vec y\parallel^2=\parallel \vec x+\vec y\parallel^2$
+
+证明：$\parallel x+y\parallel^2=(\vec x+\vec y)^T(\vec x+\vec y)=x^Tx+y^Ty+x^Ty+xy^T=\parallel \vec x\parallel^2+\parallel \vec y\parallel^2$
+
+**子空间的正交**：两个子空间正交，两个空间中的所有向量正交，因此对于两个相交的子空间，其必定不是正交的，因为对于空间的交线，已经不满足对于所有空间中向量正交。
+
+**行空间与零空间正交，二者互相为n维空间的正交补（因为$rank(C(A^T))+rank(N(A))=n$)，列空间与左零空间正交，二者互为n空间的正交补**
+
+因此在三维空间中，一组正交直线无法成为行空间及零空间，因为 $1+1\neq3$ ，二者不互补
+
+**求解无解方程 $Ax=b$** 
+
+为了清楚坏数据，常常将方程组化为 $A^TA\cdot \hat x=A^Tb$ ，给出如下结论：
+
+$N(A^TA)=N(A),rank(A^TA)=rank(A)$ 
+
+## 子空间的投影
+
+[15. MIT线性代数---投影](https://zhuanlan.zhihu.com/p/45246414)
