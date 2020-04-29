@@ -199,8 +199,6 @@ $Ax=b\Rightarrow Ax=b+0$ 即其解为一个自由变量都为0的特解以及零
 | $r=m<n$   | $R=\begin{bmatrix} I&F\end{bmatrix}$     | 有无穷解         |
 | $r<m,r<n$ | $R=\begin{bmatrix}I&F\\0&0\end{bmatrix}$ | 无解或无穷解     |
 
-
-
 1. $r=m=n$，此时矩阵满秩，$r=n$ 推出该矩阵覆盖n维空间同时其不存在自由变量，零向量空间仅包含全为零的向量，又由于 $m=n$，则 $R=I$ ，不存在全为0的行，即一定有1解，综合来看，在该情况下有且仅有一解
 2. $r=n<m$，此时无自由变量，零向量空间仅包含全为零的向量，又$R=\begin{bmatrix}I\\0 \end{bmatrix}$，因此取决于特殊解是否存在，综上无解或者仅有一解。
 3. $r=m<n$，此时存在自由变量，即一定有无穷解（零向量空间），$R=\begin{bmatrix} I&F\end{bmatrix}$，一定存在特殊解，综上有无穷解
@@ -419,7 +417,7 @@ $$
 
 1. 化简成三角矩阵后求解
 2. 利用行列式的行满足线性关系的性质，将其一次拆分，即拆分成 $n!$ 项，这一公式的一大应用就是筛出每行每列都存在非零值的行列式，有时有奇效
-3. Big formula：对某一行（列）的每个元素一次展开 $(-1)^{i+j}|A_{n-1}|$ 
+3. Cofactor formula：对某一行（列）的每个元素一次展开 $(-1)^{i+j}|A_{n-1}|$ 
 
 注意有时可以先化简再展开，或者对列进行展开（行列式的转置值不变）
 
@@ -429,7 +427,87 @@ $$
 
 2. 展开求解 $原式=\begin{vmatrix}1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&0&1\end{vmatrix}+\begin{vmatrix}1&0&0&0\\0&0&1&0\\0&1&0&0\\0&0&0&1\end{vmatrix}+\begin{vmatrix}0&1&0&0\\1&0&0&0\\0&0&1&0\\0&0&0&1\end{vmatrix}=-1$
 
-3. Big formula：对第一行展开 $原式=(-1)^{1+1}\begin{vmatrix}1&1&0\\1&1&1\\0&1&1\end{vmatrix}+(-1)^{1+2}\begin{vmatrix}1&1&0\\0&1&1\\0&1&1\end{vmatrix}=(-1)^{1+1}\begin{vmatrix}1&1&0\\1&1&1\\0&1&1\end{vmatrix}+(-1)^{1+2}(-1)^{1+1}\begin{vmatrix}1&1\\1&1\end{vmatrix}=|A_3|-|A_2|=-1$
+3. Cofactor formula：对第一行展开 $原式=(-1)^{1+1}\begin{vmatrix}1&1&0\\1&1&1\\0&1&1\end{vmatrix}+(-1)^{1+2}\begin{vmatrix}1&1&0\\0&1&1\\0&1&1\end{vmatrix}=(-1)^{1+1}\begin{vmatrix}1&1&0\\1&1&1\\0&1&1\end{vmatrix}+(-1)^{1+2}(-1)^{1+1}\begin{vmatrix}1&1\\1&1\end{vmatrix}=|A_3|-|A_2|=-1$
 
    事实上，确实能够推出 $|A_n|=|A_{n-1}|-|A_{n-2}|$ ，该行列式满足六个一循环
 
+## 克莱默法则、逆矩阵、体积
+
+[20. MIT线性代数---克莱默法则、逆矩阵、体积](https://zhuanlan.zhihu.com/p/46159505)
+
+$C$ 为代数余子式组成的矩阵，$C^T$ 称为原矩阵的伴随矩阵。
+
+满足公式：$A^{-1}=\frac{1}{|A|}C^T$，只需证明 $AC^T=|A|I$
+
+对于对角线上的元素，其均为Cofactor formula的展开，满足 $\sum_{k=1}^na_{ij}c_{jk}=|A|$，即依次对第 $i$ 行展开，对于非对角线上的元素，以第一行为例，$a_{11}c_{n1}+a_{12}c_{n2}+\dots+a_{1n}c_{nn}$ 等价于行列式在第 $n$ 行展开，即如 $\begin{vmatrix}a_{11}&a_{12}&\dots&a_{nn}\\a_{21}&a_{22}&\dots&a_{2n}\\\vdots&\vdots&\ddots&\vdots\\a_{11}&a_{12}&\dots&a_{1n}\end{vmatrix}$ 由于首行与第 $n$ 行相同，行列式为0，等式得证
+
+基于如上公式，**克莱默法则**有：$x=A^{-1}b=\frac{1}{|A|}C^Tb=\frac{B}{|A|}$ ，其中 $B$ 是 $n$ 个行列式，每个行列式是将 $b$ 带入第 $i$ 列所得，如 $b_1=\begin{vmatrix}b_1&a_{12}&\dots&a_{nn}\\b_2&a_{22}&\dots&a_{2n}\\\vdots&\vdots&\ddots&\vdots\\b_n&a_{n2}&\dots&a_{nn}\end{vmatrix}$
+
+行列式代表着对应空间的体积，其**证明思路**是：证明体积也满足行列式的三条基本性质
+
+详细内容见链接内容，注意三角形的面积的行列式计算
+
+## 特征值和特征向量
+
+[21. MIT线性代数---特征值和特征向量](https://zhuanlan.zhihu.com/p/46716369)
+
+对于方阵 $A$，有 $Ax=\lambda x$，对此 $\lambda$  称为特征值，$x$ 称为特征向量，即特征向量 $x$ 与 $Ax$ 指向统一方向
+
+对于投影矩阵，若 b 在投影平面上，则 $Pb=b$，即 $\lambda=1,x=b$；若 b 为平面的法向量，则 $Pb=0$，即 $\lambda=0$，综上，投影矩阵的特征向量为 0，1
+
+对于置换矩阵 $P=\begin{bmatrix}0&1\\1&0\end{bmatrix}$ ，$\begin{bmatrix}0&1\\1&0\end{bmatrix}\begin{bmatrix}1\\1\end{bmatrix}=\begin{bmatrix}1\\1\end{bmatrix}$ ，$\begin{bmatrix}0&1\\1&0\end{bmatrix}\begin{bmatrix}1\\-1\end{bmatrix}=-\begin{bmatrix}1\\-1\end{bmatrix}$ ，即置换矩阵 $P$ 的特征值为1，-1，特征向量为 $\begin{bmatrix}1\\1\end{bmatrix},\begin{bmatrix}1\\-1\end{bmatrix}$ ，注意这两个特征向量互相垂直
+
+对于旋转矩阵（[旋转矩阵](https://www.cnblogs.com/WangGuiHandsome/p/10094784.html)），$Q=\begin{bmatrix}cos90&-sin90\\sin90&cos90\end{bmatrix}=\begin{bmatrix}0&-1\\1&0\end{bmatrix}$ ，其既为标准正交矩阵，又满足 $Q^T=-Q$ 这一极度不对称的特征，此时其特征值为纯虚数，即矩阵越是不对称，其特征值越偏向虚数
+
+**注意：**
+
+对于 $Ax=\lambda x,By=\sigma y$，二者的特征值不满足线性规律（即 $(A+B)X\neq(\lambda+\sigma)x,ABx\neq\lambda \sigma x$），因为往往特征向量不同，除非 $A,B$ 之中一矩阵为单位矩阵。
+
+而对于A的幂次方，以二次方为例 $A^2x-\lambda Ax=\lambda^2 x$，特征值也为平方，特征向量不变
+
+**规律：** 
+
+- 特征值的和等于对角线上元素的和 $\sum_{1}^n \lambda_i=\sum_{1}^n a_{ii}$ ，对角线上元素的和称为迹
+- 特征值的积等于矩阵的行列式 $\prod_i^n \lambda_i=|A|$
+
+
+
+特征值及特征向量的求解见链接，主要思路 $Ax=\lambda x\rightarrow (A-\lambda I)x=0$ ，此时 x 处于零空间中，若 x 非零则 $rank(A-\lambda I)<n$ ，即其不可逆、奇异 $|A-\lambda I|=0$ ，结合其上规律求解，解得 $\lambda$ 后带入求解 $x$ 
+
+## 对角化以及A的幂
+
+[如何理解矩阵特征值？](https://www.zhihu.com/question/21874816)
+
+假设矩阵A具有n个线性无关的特征向量（不是所有矩阵都具有n个线性无关的特征向量），令其组成矩阵S，因此矩阵S必定可逆，有如下变换，其中 $\Lambda$ 为**对角特征矩阵**：
+$$
+AS=A\begin{bmatrix}x_1&x_2&\dots&x_n\end{bmatrix}
+=\begin{bmatrix}\lambda_1x_1&\lambda_2x_2&\dots&\lambda_3x_n\end{bmatrix}
+=\begin{bmatrix}x_1&x_2&\dots&x_n\end{bmatrix}\begin{bmatrix}\lambda_1&0&\dots&0\\0&\lambda_2&\dots&0\\\vdots&\vdots&\ddots&\vdots\\0&0&\dots&0\end{bmatrix}
+=S\Lambda
+$$
+因此，我们可以得到公式 $S^{-1}AS=\Lambda$，即对角化，对角化的前提是 S 可逆，即 n 个特征向量独立
+
+对比上一节对 $A^2$ 的理解，对角化后，$A^2=S\Lambda S^{-1}S\Lambda S^{-1}=S\Lambda^2 S^{-1}$ ，因为 $\Lambda$ 为对角矩阵，且特征值平方，故对焦特征矩阵也平方，**这就是特征值的应用，用于理解矩阵的幂次**
+
+定理1，$A^k\rightarrow0\text{ as }k\rightarrow\infin\text{ if all }|\lambda_i|<1$
+
+**KeyPoint：**存在 n 个独立的特征向量 $\Longleftrightarrow$ 所有特征值不同，事实上，在有特征值相同的情况下，也可能存在 n 个独立的特征向量，例如单位矩阵特征值都为1，但是其存在 n 个独立的特征向量，也存在特征向量不足 n 个的情况 （[如何理解不同特征值对应的特征向量线性无关](https://zhuanlan.zhihu.com/p/30454490)）
+
+对于 $u_{k+1}=Au_k$ ，有 $u_{k}=A^ku_0$，以斐波那契数列为例，$F_0=0,F_1=1,F_{k+2}=F_{k+1}+F_k$，解法重点，添加一行 $F_{k+1}=F_{k+1}$，得到方程组 $\begin{equation}
+\left\{
+\begin{aligned}
+F_{k+2}&=F_{k+1}+F_k\\
+F_{k+1}&=F_{k+1}\\
+\end{aligned}
+\right.
+\end{equation}$ ，令 $u_k=\begin{bmatrix}F_{k+1}\\F_k\end{bmatrix}$，得到如下形式
+$$
+\begin{bmatrix}F_{k+2}\\F_{k+1}\end{bmatrix}=\begin{bmatrix}1&1\\1&0\end{bmatrix}\begin{bmatrix}F_{k+1}\\F_{k}\end{bmatrix}\Longrightarrow u_{k+1}=\begin{bmatrix}1&1\\1&0\end{bmatrix}u_k
+$$
+对 $A=\begin{bmatrix}1&1\\1&0\end{bmatrix}=S\Lambda S^{-1}$ ，A的特征值为 $\lambda_1=\frac{1+\sqrt{5}}{2},\lambda_2=\frac{1-\sqrt{5}}{2}$，特征向量为 $\begin{bmatrix}\lambda\\1\end{bmatrix}\Rightarrow x_1=\begin{bmatrix}\lambda_1\\1\end{bmatrix},x_2=\begin{bmatrix}\lambda_2\\1\end{bmatrix}$，$S=[x_1,x_2]$，可以发现这里的特征值其实就是高中数列所求的特征值，由于 $x_1,x_2$ 线性无关，可以用**来表示任意二维向量**，因此 $F_0=\begin{bmatrix}1\\0\end{bmatrix}=c_1x_1+c_2x_2=Sc$，即
+$$
+u_{k+1}=\begin{bmatrix}1&1\\1&0\end{bmatrix}u_k=A^ku_0=S\Lambda^kS^{-1}Sc=\Lambda^kSc\\或\quad u_{k+1}=\begin{bmatrix}1&1\\1&0\end{bmatrix}u_k=A^ku_0=\lambda_1^kx_1c_1+\dots+\lambda_n^kx_nc_n=\Lambda^kSc
+$$
+根据定理1，$|\lambda_2|<1$，则增长速度主要由 $\lambda_1$ 决定，即 $u_k\approx\lambda^k x_1c_1$，换句话说，随着 k 的增大，**矩阵越来越贴近最大的特征值**
+
+## 微分方程和exp(At)
