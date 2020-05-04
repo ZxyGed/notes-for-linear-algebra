@@ -4,7 +4,7 @@
 
 ## 方程组的几何解释
 
-从行的角度看，矩阵可以看作是方程组（方程组也可以看成面，于是化为面的交点）；
+从行的角度看，矩阵可以看作是方程组（方程组也可以看成面 ，于是化为面的交点）；
 
 从列的角度，每一列可以看作一个三维向量，化为三个向量的线性和，于是对于如下问题
 
@@ -634,6 +634,8 @@ M^{-1}AMM^{-1}x=\lambda M^{-1}x\Longrightarrow BM^{-1}x=\lambda M^{-1}x
 $$
 由此可知 A、B 特征值相同，$M^{-1}x$ 为 B 的特征向量
 
+**图像意义**在于，$M$ 以及 $M^{-1}$ 指代的是视角的转换，$A$ 代表所作的变换，在基变换中实际上是将vector先转换到本视角进行变换后再转换到另一个视角
+
  **若尔当定理**：任意矩阵 A 都相似于一个 若尔当矩阵 J, $J=\begin{bmatrix}J_1&&&\\&J_2&&\\&&\ddots&\\&&&J_d\end{bmatrix}$ ，$J_i$ 为若尔当块
 
 若尔当块形如 $J_i=\begin{bmatrix}\lambda_1&1&&\\&\lambda_2&1&\\&&\ddots&\\&&&\lambda_d\end{bmatrix}$ ，每个块中只包含一个特征值，即（`len(unique(lambda))=1`）因此一个矩阵若尔当块的数目等于特征值的数目，若尔当块不同，矩阵不相似
@@ -657,11 +659,24 @@ SVD singular value decomposition 即对于任意矩阵A，有 $A=U\Sigma V^T$ �
 
 ## 线性变换及对应矩阵
 
+[MIT—线性代数笔记30 线性变换及对应矩阵](https://zhuanlan.zhihu.com/p/46119592)
 
+[线性代数之——基变换矩阵](https://www.cnblogs.com/seniusen/p/11924977.html)
+
+矩阵 A 的列实际上是描述输入原空间的基向量得到的列空间线性组合的系数
+$$
+\begin{array}&
+T(v_1)=a_{11}w_1+a_{21}w_2+\dots+a_{m1}w_m\\
+T(v_2)=a_{12}w_1+a_{22}w_2+\dots+a_{m2}w_m
+\end{array}
+$$
+![image-20200504235611305](MIT线性代数.assets/image-20200504235611305.png)
 
 ## 基变换和图像压缩
 
+[矩阵分析(一)：空间变换与基变换](https://zhuanlan.zhihu.com/p/69069042)
 
+[MIT—线性代数笔记31 基变换和图像压缩](https://zhuanlan.zhihu.com/p/46124796?utm_source=qq)
 
 ## 复习三
 
